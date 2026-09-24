@@ -30,7 +30,7 @@ public class CreateSaleGUI extends JFrame {
 	String encodedfile = null;
 
 	public JPanel panel_1;
-	private static final int baseSize = 128;
+	private static final int BASE_SIZE = 128;
 	private static final String basePath="src/main/resources/images/";
 
 
@@ -261,9 +261,9 @@ public class CreateSaleGUI extends JFrame {
 
 	public BufferedImage rescale(BufferedImage originalImage)
 	{
-		BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
+		BufferedImage resizedImage = new BufferedImage(BASE_SIZE, BASE_SIZE, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
+		g.drawImage(originalImage, 0, 0, BASE_SIZE, BASE_SIZE, null);
 		g.dispose();
 		return resizedImage;
 	}

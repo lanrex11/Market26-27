@@ -475,7 +475,7 @@ public class DataAccess  {
 		}
 	}
 
-	public boolean buySale(String mail, ArrayList<Integer> saleNumbers) throws NotEnoughMoneyException{
+	public boolean buySale(String mail, List<Integer> saleNumbers) throws NotEnoughMoneyException{
 		db.getTransaction().begin();
 		
 		//Existitzen badira ==> Egoera aldatu + email-a balidatu + prezioa igo
