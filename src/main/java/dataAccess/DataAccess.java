@@ -30,6 +30,8 @@ import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
+import java.util.logging.*;
+
 
 import domain.*;
 
@@ -42,7 +44,7 @@ public class DataAccess  {
 	private static final int baseSize = 160;
 
 	private static final String basePath="src/main/resources/images/";
-
+	private static final Logger logger =Logger.getLogger(DataAccess.class.getName());
 
 
 	ConfigXML c=ConfigXML.getInstance();
@@ -121,15 +123,14 @@ public class DataAccess  {
 
 
 			db.getTransaction().commit();
-			System.out.println("Db initialized");
+			logger.info("Db initialized");
 		}
 		catch (Exception e){
-			e.printStackTrace();
-		}
+		    logger.log(Level.WARNING, "Error: " + e.getMessage());		}
 	}
 
 
-	/**
+	/** 
 	 * This method creates/adds a product to a seller
 	 * 
 	 * @param title of the product
