@@ -30,7 +30,7 @@ import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 
 import domain.*;
@@ -126,12 +126,11 @@ public class DataAccess  {
 			logger.info("Db initialized");
 		}
 		catch (Exception e){
-			e.printStackTrace();
-		}
+		    logger.log(Level.WARNING, "Error: " + e.getMessage());		}
 	}
 
 
-	/**
+	/** 
 	 * This method creates/adds a product to a seller
 	 * 
 	 * @param title of the product
