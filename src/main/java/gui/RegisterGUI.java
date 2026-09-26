@@ -117,23 +117,26 @@ public class RegisterGUI extends JFrame {
 
 					isValidEmail(email);
 					isValidPassWord(password);
-					if(username.length() > 0) {
-						if(password.equals(password2)) {
-							if(!facade.isRegistered(email)) {
-								facade.register(new Registered(textFieldEmail.getText(),username,password));
-								toMainNonRegGUI();
-							}else {
-								errorLabel.setText(bundle.getString("RegisterGUI.UserAlreadyExists"));
-
-							}
-
-						}else {
-							errorLabel.setText(bundle.getString("RegisterGUI.PasswordMismatch"));
-						}
-
-					}else {
+					// Lenoko if-else katea aldatu 3 if barruan returnekin, horrela errazago irakurzteko eta ulertzeko.
+					//if-en ondoren jarri leno if guztien barruan egongo zena
+					//Horrela konplesutasuna jaitsi eta issua konpondu
+					if(username.isEmpty()) {
 						errorLabel.setText(bundle.getString("RegisterGUI.UsernameEmpty"));
+						return;
 					}
+					
+					if(!password.equals(password2)) {
+						errorLabel.setText(bundle.getString("RegisterGUI.PasswordMismatch"));
+						return;
+					}
+					
+					if(facade.isRegistered(email)) {
+						errorLabel.setText(bundle.getString("RegisterGUI.UserAlreadyExists"));
+						return;
+					}
+					
+					facade.register(new Registered(textFieldEmail.getText(),username,password));
+					toMainNonRegGUI();
 
 
 
@@ -171,5 +174,4 @@ public class RegisterGUI extends JFrame {
 		MainGUInonReg a = new MainGUInonReg(null);
 		a.setVisible(true);	
 	}
-
 }

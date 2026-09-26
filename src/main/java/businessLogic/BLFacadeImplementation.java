@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -49,9 +50,11 @@ public class BLFacadeImplementation  implements BLFacade {
 
 	private static final String basePath="src/main/resources/images/";
 	DataAccess dbManager;
+	
+	Logger logger = Logger.getLogger(getClass().getName());
 
 	public BLFacadeImplementation()  {		
-		System.out.println("Creating BLFacadeImplementation instance");
+		logger.info("Creating BLFacadeImplementation instance");
 		dbManager=new DataAccess();		
 	}
 
