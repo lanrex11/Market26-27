@@ -45,6 +45,7 @@ public class DataAccess  {
 
 	private static final String basePath="src/main/resources/images/";
 	private static final Logger logger =Logger.getLogger(DataAccess.class.getName());
+	private static final String ETIKETAK = "Etiquetas";
 
 
 	ConfigXML c=ConfigXML.getInstance();
@@ -126,7 +127,8 @@ public class DataAccess  {
 			logger.info("Db initialized");
 		}
 		catch (Exception e){
-		    logger.log(Level.WARNING, "Error: " + e.getMessage());		}
+		    logger.log(Level.WARNING, "Error: " + e.getMessage());		
+		}
 	}
 
 
@@ -150,17 +152,17 @@ public class DataAccess  {
 
 
 			if(pubDate.before(UtilDate.trim(new Date()))) {
-				throw new MustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
+				throw new MustBeLaterThanTodayException(ResourceBundle.getBundle(ETIKETAK).getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
 			}
 			if (file==null)
-				throw new FileNotUploadedException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorFileNotUploadedException"));
+				throw new FileNotUploadedException(ResourceBundle.getBundle(ETIKETAK).getString("DataAccess.ErrorFileNotUploadedException"));
 
 			db.getTransaction().begin();
 
 			Registered seller = db.find(Registered.class, sellerEmail);
 			if (seller.doesSaleExist(title)) {
 				db.getTransaction().commit();
-				throw new SaleAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));
+				throw new SaleAlreadyExistException(ResourceBundle.getBundle(ETIKETAK).getString("DataAccess.SaleAlreadyExist"));
 			}
 
 			Sale sale = seller.addSale(title, description, status, price, pubDate, file);

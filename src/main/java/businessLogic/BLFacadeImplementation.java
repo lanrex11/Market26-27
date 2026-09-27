@@ -1,22 +1,18 @@
 package businessLogic;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
-
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-
-import com.objectdb.o.CLN.p;
-
 import dataAccess.DataAccess;
 import domain.Sale;
 import domain.User;
 import enums.MovementType;
 import enums.ReportReason;
 import enums.SaleType;
-import domain.Admin;
 import domain.Complaint;
 import domain.ComplaintContainer;
 import domain.Movement;
@@ -34,7 +30,6 @@ import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
-
 import java.awt.image.BufferedImage;
 import java.awt.Image;
 import javax.imageio.ImageIO;
