@@ -51,9 +51,6 @@ public abstract class User  implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Registered other = (Registered) obj;
-		//if (email != other.email)
-			//return false;
 		return true;
 	}
 

@@ -54,7 +54,7 @@ public class CreateSaleGUI extends JFrame {
 
 	JComboBox<String> jComboBoxStatus = new JComboBox<String>();
 	DefaultComboBoxModel<String> statusOptions = new DefaultComboBoxModel<String>();
-	List<String> status;
+	private List<String> status;
 
 
 	private JButton jButtonCreate = new JButton(ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.CreateProduct"));

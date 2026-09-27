@@ -124,6 +124,7 @@ public class Registered extends User implements Serializable {
 		this.rating = rating;
 	}
 
+	@Override
 	public String toString(){
 		return  name+sales;
 	}
