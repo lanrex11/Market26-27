@@ -26,7 +26,7 @@ public class MakeReportGUI extends JFrame {
         ResourceBundle bundle = ResourceBundle.getBundle("Etiquetas");
 
         setTitle(bundle.getString("MakeReportGUI.Title"));
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(400, 320);
         setResizable(false);
 
