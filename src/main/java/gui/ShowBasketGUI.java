@@ -23,7 +23,7 @@ public class ShowBasketGUI extends JFrame {
 
 	private String currentMail;
 	private SaleType saleType;
-	private QuerySaleGUI parent;
+	private QuerySaleGUI guraso;
 
 	private static final long serialVersionUID = 1L;
 	private final JLabel jLabelProducts = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.initialize")); 
@@ -60,7 +60,7 @@ public class ShowBasketGUI extends JFrame {
 	public ShowBasketGUI(String mail, ArrayList<Sale> basket, JFrame p) {
 		this.basket=basket;
 		this.currentMail=mail;
-		this.parent = (QuerySaleGUI) p;
+		this.guraso = (QuerySaleGUI) p;
 		
 		tableProducts.setEnabled(false);
 		//thisFrame=this;
@@ -95,7 +95,7 @@ public class ShowBasketGUI extends JFrame {
 				try{
 					facade.buySale(currentMail, numbBasket);
 					dispose();
-					parent.dispose();
+					guraso.dispose();
 				}catch (NotEnoughMoneyException ex){
 					jLabelError.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.NotEnoughMoney"));
 				}
@@ -149,8 +149,8 @@ public class ShowBasketGUI extends JFrame {
 		                Sale s = basket.remove(row);
 		                refreshQuery();
 		                System.out.println("\nSaskitik ezabatua: "+s);
-		                parent.removeFromBasket(s);
-		                parent.refreshQuery();
+		                guraso.removeFromBasket(s);
+		                guraso.refreshQuery();
 		                
 		                int prezioTot = 0;
 		                for (Sale sale : basket) {
