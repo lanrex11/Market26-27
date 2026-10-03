@@ -14,44 +14,47 @@ import org.junit.Test;
 import dataAccess.DataAccess;
 import domain.Sale;
 import domain.Registered;
+import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
-import exceptions.ParamNullException;
 import exceptions.SaleAlreadyExistException;
 import testOperations.TestDataAccess;
 
-public class ManageMoneyDBWhiteTest {
 
-	//sut:system under test
-	static DataAccess sut = new DataAccess();
-
-	//additional operations needed to execute the test 
-	static TestDataAccess testDA = new TestDataAccess();
-
+public class ToggleWishListBDWhiteTest {
+	// sut : system under test
+	static DataAccess sut = new DataAccess(); 
+	
+	//additional operations needed to execute the test
+	static TestDataAccess testDA= new TestDataAccess();
+	
 	@SuppressWarnings("unused")
-	private  Registered seller; 
+	private  Registered regist; 
 	private String email;
-
-
+	private Sale sale;
+	private String username;
+	private String pass;
+	
 	@Before
-	public  void initTest(){
-		//TODO open eta close?
-		email = "user1@gmail.com";
-		seller = new Registered(email, "User1", "123");
+	public void initTest() {
+		email = "aimar@gmail.com";
+		username = "Aimar";
+		pass = "123";
 		testDA.open();
-		testDA.createRegistered(email, "User1", email)
-		testDA.setBalance(email, 20);
-
+		regist = testDA.createRegistered(email, username, pass);
+		sale = testDA.addSaleToRegistered(email, "Baloia", "Oso polita", 1, 20, new Date(), null);
+		regist.addToWishList(sale);
 	}
+	
 	@After
 	public  void finishTest(){
-		//TODO open eta close?
+		testDA.open();
 		testDA.removeRegistered(email);
-
+		testDA.close();
 	}	
-
+	
 	@Test
 	public void test1() {
-
-	} 
-
+		sut.open();
+		
+	}
 }
