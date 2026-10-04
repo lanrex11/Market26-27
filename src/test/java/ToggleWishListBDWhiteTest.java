@@ -40,48 +40,38 @@ public class ToggleWishListBDWhiteTest {
 	public void initTest() {
 		testDA.open();
 		testDA.createRegistered("salePortaduna", "seller-a", "1234");
+		sale = testDA.addSaleToRegistered("salePortaduna", "baloia", "oso polita", 1, 20, null, null);
 		testDA.close();
 	}
 	
 	@After
 	public void finishTest() {
 		testDA.open();
+		testDA.removeRegistered(email);
+		if (sale != null) {
+			testDA.removeSale(sale.getSaleNumber());
+		}
 		testDA.removeRegistered("salePortaduna");
 		testDA.close();
 	}
 	
-	//Seller/Regsitered == null
+	//Lehen kasua, email duen usuarioa ez da datu basean existitzen
 	@Test
 	public void test1() {
-		//Sale-a sortu datu basean, toggleWishList-ek email eta sale number bat eskatzen dituelako.
-		//Gainera lehen proban seller = null denean probatu nahi dut, sale ondo egonez
-		testDA.open();
-		sale = testDA.addSaleToRegistered("salePortaduna", "baloia", "oso polita", 1, 20, null, null);
-		testDA.close();
-		
-		//email-ek sortu ez den usuario baten emaila da, hau da, find egitean null itzuliko du.
 		try {
 			sut.open();
 			boolean result = sut.toggleWishList(email, sale.getSaleNumber());
 			sut.close();
-			
-			//Ezabatu sortutako sale-a
-			testDA.open();
-			testDA.removeSale(sale.getSaleNumber());
-			testDA.close();
-			
 			assertFalse(result);
 		
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Ez luke salbuespenik altxa behar");
-			testDA.open();
-			testDA.removeSale(sale.getSaleNumber());
-			testDA.close();
 			fail();
 		}
 	}
 	
+	//Bigarren kasua, ez da existitzen gehitu nahi den saleNumber duen Sale-rik datu basean
 	@Test
 	public void test2() {
 		testDA.open();
@@ -92,81 +82,53 @@ public class ToggleWishListBDWhiteTest {
 			sut.open();
 			boolean result = sut.toggleWishList(email, 99999999);
 			sut.close();
-			
-			testDA.open();
-			testDA.removeRegistered(email);
-			testDA.close();
-			
 			assertFalse(result);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("Ez luke salbuespenik altxa beharko");
-			testDA.open();
-			testDA.removeSale(sale.getSaleNumber());
-			testDA.close();
 			fail();
 		}
 	}
 	
+	//Hirugarren kasua, email userrak ez du sale-a wishListean
 	@Test
 	public void test3() {
 		testDA.open();
 		regist = testDA.createRegistered(email, username, pass);
-		sale = testDA.addSaleToRegistered("salePortaduna", "baloia", "oso polita", 1, 20, null, null);
-		regist.addToWishList(sale);
 		testDA.close();
 		
 		try {
 			sut.open();
 			boolean result = sut.toggleWishList(email, sale.getSaleNumber());
-			sut.close();
-			
-			testDA.open();
-			testDA.removeSale(sale.getSaleNumber());
-			testDA.removeRegistered(email);
-			testDA.close();
-			
+			sut.close();			
 			assertTrue(result);
 			
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Ez luke salbuespenik altxa beharko");
-			testDA.open();
-			testDA.removeSale(sale.getSaleNumber());
-			testDA.removeRegistered(email);
-			testDA.close();
 			fail();
 			
 		}
 	}
 	
+	//Laugarren kasua, email userrak sale-a wishList-ean du
 	@Test
 	public void test4() {
 		testDA.open();
 		regist = testDA.createRegistered(email, username, pass);
-		sale = testDA.addSaleToRegistered("salePortaduna", "baloia", "oso polita", 1, 20, null, null);
+		testDA.addSaleToWishList(email, sale.getSaleNumber());
 		testDA.close();
 		
 		try {
 			sut.open();
-			regist.addToWishList(sale);
 			boolean result = sut.toggleWishList(email, sale.getSaleNumber());
 			sut.close();
-			
-			testDA.open();
-			testDA.removeSale(sale.getSaleNumber());
-			testDA.removeRegistered(email);
-			testDA.close();
-			
 			assertTrue(result);
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Ez luke salbuespenik altxa beharko");
-			testDA.open();
-			testDA.removeSale(sale.getSaleNumber());
-			testDA.removeRegistered(email);
-			testDA.close();
 			fail();
 		}
 		

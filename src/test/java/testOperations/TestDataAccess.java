@@ -157,5 +157,14 @@ public class TestDataAccess {
 
 	}
 
+	public void addSaleToWishList(String email, int saleNumber) {
+		db.getTransaction().begin();
+		Registered reg = db.find(Registered.class, email);
+		Sale s = db.find(Sale.class, saleNumber);
+		if (reg != null && s != null) {
+			reg.addToWishList(s);
+		}
+		db.getTransaction().commit();
+	}
 
 }
