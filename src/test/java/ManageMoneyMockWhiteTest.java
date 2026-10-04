@@ -9,51 +9,69 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import dataAccess.DataAccess;
 
 import domain.Registered;
 import enums.MovementType;
-import enums.QueryFilterType;
+
 import exceptions.NotEnoughMoneyException;
-import testOperations.TestDataAccess;
 
-public class ManageMoneyBDWhiteTest {
 
-	//sut:system under test
-	static DataAccess sut = new DataAccess();
+public class ManageMoneyMockWhiteTest {
 
-	//additional operations needed to execute the test 
-	static TestDataAccess testDA = new TestDataAccess();
+	static DataAccess sut;
+	protected MockedStatic<Persistence> persistenceMock;
+	@Mock
+	protected EntityManagerFactory entityManagerFactory;
+	@Mock
+	protected EntityManager db;
+	@Mock
+	protected EntityTransaction et;
 
 	@SuppressWarnings("unused")
 	private  Registered reg; 
 	private String email,username,pass;
 	private double balance;
- 
+
 
 	@Before
-	public  void initTest(){
+	public void init() {
+		MockitoAnnotations.openMocks(this);
+		persistenceMock = Mockito.mockStatic(Persistence.class);
+		persistenceMock.when(() ->
+		Persistence.createEntityManagerFactory(Mockito.any())).thenReturn(entityManagerFactory);
+		Mockito.doReturn(db).when(entityManagerFactory).createEntityManager();
+		Mockito.doReturn(et).when(db).getTransaction();
+		
+		sut = new DataAccess(db);
+
 		email = "user1@gmail.com";
 		username = "User1";
 		pass = "123";
 		balance = 20;
+		reg = new Registered(email, username, pass);
+		reg.setBalance(balance);
+		Mockito.when(db.find(Registered.class, email)).thenReturn(reg);
 
-		testDA.open();
-		reg = testDA.createRegistered(email, username, pass);
-		testDA.setBalance(email, balance);
-		testDA.close();
 
 	}
 	@After
-	public  void finishTest(){
-		testDA.open();
-		testDA.removeRegistered(email);
-		testDA.close();
-	}	
+	public void tearDown() {
+		persistenceMock.close();
+	}
 
 	@Test
 	public void test1() {
