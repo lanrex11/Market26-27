@@ -132,14 +132,13 @@ public class ManageMoneyMockBlackTest {
 	    try {
 	        sut.open();
 	        sut.manageMoney(null, 30.0, MovementType.DEPOSIT);
+	        sut.close();
 	        fail("IllegalArgumentException bota beharko luke");
 	    }catch(NotEnoughMoneyException ex) {
 	        fail("IllegalArgumentException bota beharko luke");
 	    }
 	    catch (IllegalArgumentException e) {
 	        assertTrue(true);
-	    } finally {
-	        sut.close();
 	    }
 	}
 	
