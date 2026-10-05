@@ -1,13 +1,6 @@
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.ArgumentMatchers.booleanThat;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,9 +9,6 @@ import org.junit.Test;
 import dataAccess.DataAccess;
 import domain.Sale;
 import domain.Registered;
-import exceptions.FileNotUploadedException;
-import exceptions.MustBeLaterThanTodayException;
-import exceptions.SaleAlreadyExistException;
 import testOperations.TestDataAccess;
 
 
@@ -66,8 +56,7 @@ public class ToggleWishListBDWhiteTest {
 		
 		}catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("Ez luke salbuespenik altxa behar");
-			fail();
+			fail("Ez luke salbuespenik altxa beharko");
 		}
 	}
 	
@@ -86,8 +75,7 @@ public class ToggleWishListBDWhiteTest {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("Ez luke salbuespenik altxa beharko");
-			fail();
+			fail("Ez luke salbuespenik altxa beharko");
 		}
 	}
 	
@@ -106,8 +94,7 @@ public class ToggleWishListBDWhiteTest {
 			
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Ez luke salbuespenik altxa beharko");
-			fail();
+			fail("Ez luke salbuespenik altxa beharko");
 			
 		}
 	}
@@ -128,8 +115,7 @@ public class ToggleWishListBDWhiteTest {
 			
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Ez luke salbuespenik altxa beharko");
-			fail();
+			fail("Ez luke salbuespenik altxa beharko");
 		}
 		
 	}
