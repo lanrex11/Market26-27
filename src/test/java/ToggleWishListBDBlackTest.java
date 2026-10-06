@@ -88,8 +88,40 @@ public class ToggleWishListBDBlackTest {
 			boolean result = sut.toggleWishList(null, sale.getSaleNumber());
 			sut.close();
 			
+			fail("IllegalArgumentException altxa beharko luke");
+		}catch (IllegalArgumentException e) {
+			sut.close();
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void test4() {
+		try {
+			sut.open();
+			boolean result = sut.toggleWishList(email, sale.getSaleNumber());
+			sut.close();
+			
 			assertFalse(result);
-		}catch (Exception e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Ez luke salbuespenik altxa beharko");
+		}
+	}
+	
+	@Test
+	public void test5() {
+		testDa.open();
+		testDa.createRegistered(email, username, pass);
+		testDa.close();
+		
+		try {
+			sut.open();
+			boolean result = sut.toggleWishList(email, sale.getSaleNumber()-1);
+			sut.close();
+			
+			assertFalse(result);
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Ez luke salbuespenik altxa beharko");
 		}
