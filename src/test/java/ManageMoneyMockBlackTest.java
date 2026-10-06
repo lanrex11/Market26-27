@@ -83,7 +83,7 @@ public class ManageMoneyMockBlackTest {
 			sut.close();
 			fail("NotEnoughMoneyException altxatu beharko litzateke");
 
-		}catch(Exception ex) {
+		}catch(NotEnoughMoneyException ex) {
 			assertTrue(true);
 		}
 	} 
