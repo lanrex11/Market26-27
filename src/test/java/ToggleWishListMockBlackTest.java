@@ -1,55 +1,68 @@
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import dataAccess.DataAccess;
-import domain.Sale;
 import domain.Registered;
-import testOperations.TestDataAccess;
+import domain.Sale;
 
-public class ToggleWishListBDBlackTest {
-	static DataAccess sut = new DataAccess();
+public class ToggleWishListMockBlackTest {
 	
-	static TestDataAccess testDa = new TestDataAccess();
+	static DataAccess sut;
+	protected MockedStatic<Persistence> persistenceMock;
+	@Mock
+	protected EntityManagerFactory entityManagerFactory;
+	@Mock
+	protected EntityManager db;
+	@Mock
+	protected EntityTransaction et;
 	
-	@SuppressWarnings("unused")
 	private Registered regist; 
 	private String email = "aimar@gmail.com";
 	private Sale sale;
 	private String username = "Aimar";
 	private String pass = "1234";
+	private int saleNum = 10;
 	
 	@Before
-	public void initTest() {
-		testDa.open();
-		testDa.createRegistered("salePortaduna", "seller-a", "1234");
-		sale = testDa.addSaleToRegistered("salePortaduna", "baloia", "oso polita", 1, 20, null, null);
-		testDa.close();
+	public void init() {
+		MockitoAnnotations.openMocks(this);
+		persistenceMock = Mockito.mockStatic(Persistence.class);
+		persistenceMock.when(() ->
+		Persistence.createEntityManagerFactory(Mockito.any())).thenReturn(entityManagerFactory);
+		Mockito.doReturn(db).when(entityManagerFactory).createEntityManager();
+		Mockito.doReturn(et).when(db).getTransaction();
+		
+		sut = new DataAccess(db);
+
+		regist = new Registered(email, username, pass);
+		sale = new Sale("Baloia", "Oso polita", 1, 20, null, null, regist);
+		sale.setSaleNumber(saleNum);
+		Mockito.when(db.find(Registered.class, email)).thenReturn(regist);
+		Mockito.when(db.find(Registered.class, "alain@gmail.com")).thenReturn(null);
+		Mockito.when(db.find(Registered.class, null)).thenThrow(new IllegalArgumentException());
+		Mockito.when(db.find(Sale.class, saleNum)).thenReturn(sale);
 	}
-	
 	@After
-	public void finishTest() {
-		testDa.open();
-		testDa.removeRegistered(email);
-		if (sale != null) {
-			testDa.removeSale(sale.getSaleNumber());
-		}
-		testDa.removeRegistered("salePortaduna");
-		testDa.close();
+	public void tearDown() {
+		persistenceMock.close();
 	}
-	
 	
 	@Test
-	public void test1() {
-		testDa.open();
-		testDa.createRegistered(email, username, pass);
-		testDa.close();
-		
+	public void test1() {		
 		try {
 			sut.open();
 			boolean result = sut.toggleWishList(email, sale.getSaleNumber());
@@ -64,10 +77,7 @@ public class ToggleWishListBDBlackTest {
 	
 	@Test
 	public void test2() {
-		testDa.open();
-		testDa.createRegistered(email, username, pass);
-		testDa.addSaleToWishList(email, sale.getSaleNumber());
-		testDa.close();
+		regist.addToWishList(sale);
 		
 		try {
 			sut.open();
@@ -83,6 +93,7 @@ public class ToggleWishListBDBlackTest {
 	
 	@Test
 	public void test3() {
+		
 		try {
 			sut.open();
 			boolean result = sut.toggleWishList(null, sale.getSaleNumber());
@@ -111,10 +122,6 @@ public class ToggleWishListBDBlackTest {
 	
 	@Test
 	public void test5() {
-		testDa.open();
-		testDa.createRegistered(email, username, pass);
-		testDa.close();
-		
 		try {
 			sut.open();
 			boolean result = sut.toggleWishList(email, sale.getSaleNumber()-1);
@@ -126,5 +133,4 @@ public class ToggleWishListBDBlackTest {
 			fail("Ez luke salbuespenik altxa beharko");
 		}
 	}
-	
 }

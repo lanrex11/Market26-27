@@ -45,7 +45,6 @@ public class ToggleWishListBDWhiteTest {
 		testDA.close();
 	}
 	
-	//Lehen kasua, email duen usuarioa ez da datu basean existitzen
 	@Test
 	public void test1() {
 		try {
@@ -60,7 +59,6 @@ public class ToggleWishListBDWhiteTest {
 		}
 	}
 	
-	//Bigarren kasua, ez da existitzen gehitu nahi den saleNumber duen Sale-rik datu basean
 	@Test
 	public void test2() {
 		testDA.open();
@@ -79,7 +77,6 @@ public class ToggleWishListBDWhiteTest {
 		}
 	}
 	
-	//Hirugarren kasua, email userrak ez du sale-a wishListean
 	@Test
 	public void test3() {
 		testDA.open();
@@ -99,7 +96,6 @@ public class ToggleWishListBDWhiteTest {
 		}
 	}
 	
-	//Laugarren kasua, email userrak sale-a wishList-ean du
 	@Test
 	public void test4() {
 		testDA.open();
