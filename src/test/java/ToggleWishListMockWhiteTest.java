@@ -47,7 +47,6 @@ public class ToggleWishListMockWhiteTest {
 		sale.setSaleNumber(saleNum);
 		}
 	
-	//Lehen kasua, email duen usuarioa ez da existitzen
 	@Test
 	public void test1() {
 		when(db.find(Registered.class, email)).thenReturn(null);
@@ -62,7 +61,6 @@ public class ToggleWishListMockWhiteTest {
 		}
 	}
 	
-	//Bigarren kasua, ez da existitzen gehitu nahi den saleNumber duen Sale-rik
 	@Test
 	public void test2() {
 		when(db.find(Registered.class, email)).thenReturn(regist);
@@ -77,7 +75,6 @@ public class ToggleWishListMockWhiteTest {
 		}
 	}
 	
-	//Hirugarren kasua, email userrak ez du sale-a wishListean
 	@Test
 	public void test3() {
 		when(db.find(Registered.class, email)).thenReturn(regist);
@@ -93,7 +90,6 @@ public class ToggleWishListMockWhiteTest {
 		}
 	}
 	
-	//Laugarren kasua, email userrak sale-a wishList-ean du
 	@Test
 	public void test4() {
 		regist.addToWishList(sale);

@@ -1,13 +1,6 @@
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.ArgumentMatchers.booleanThat;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,9 +9,6 @@ import org.junit.Test;
 import dataAccess.DataAccess;
 import domain.Sale;
 import domain.Registered;
-import exceptions.FileNotUploadedException;
-import exceptions.MustBeLaterThanTodayException;
-import exceptions.SaleAlreadyExistException;
 import testOperations.TestDataAccess;
 
 
@@ -55,7 +45,6 @@ public class ToggleWishListBDWhiteTest {
 		testDA.close();
 	}
 	
-	//Lehen kasua, email duen usuarioa ez da datu basean existitzen
 	@Test
 	public void test1() {
 		try {
@@ -66,12 +55,10 @@ public class ToggleWishListBDWhiteTest {
 		
 		}catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("Ez luke salbuespenik altxa behar");
-			fail();
+			fail("Ez luke salbuespenik altxa beharko");
 		}
 	}
 	
-	//Bigarren kasua, ez da existitzen gehitu nahi den saleNumber duen Sale-rik datu basean
 	@Test
 	public void test2() {
 		testDA.open();
@@ -86,12 +73,10 @@ public class ToggleWishListBDWhiteTest {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("Ez luke salbuespenik altxa beharko");
-			fail();
+			fail("Ez luke salbuespenik altxa beharko");
 		}
 	}
 	
-	//Hirugarren kasua, email userrak ez du sale-a wishListean
 	@Test
 	public void test3() {
 		testDA.open();
@@ -106,13 +91,11 @@ public class ToggleWishListBDWhiteTest {
 			
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Ez luke salbuespenik altxa beharko");
-			fail();
+			fail("Ez luke salbuespenik altxa beharko");
 			
 		}
 	}
 	
-	//Laugarren kasua, email userrak sale-a wishList-ean du
 	@Test
 	public void test4() {
 		testDA.open();
@@ -128,8 +111,7 @@ public class ToggleWishListBDWhiteTest {
 			
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Ez luke salbuespenik altxa beharko");
-			fail();
+			fail("Ez luke salbuespenik altxa beharko");
 		}
 		
 	}
