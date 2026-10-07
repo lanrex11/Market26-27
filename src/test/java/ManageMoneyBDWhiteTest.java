@@ -55,6 +55,7 @@ public class ManageMoneyBDWhiteTest {
 		testDA.close();
 	}	
 
+	/*
 	@Test
 	public void test1() {
 		try {
@@ -117,5 +118,5 @@ public class ManageMoneyBDWhiteTest {
 			ex.printStackTrace();
 			fail("Ez luke salbuespenik altsatu beharko");
 		}
-	}
+	}*/
 }

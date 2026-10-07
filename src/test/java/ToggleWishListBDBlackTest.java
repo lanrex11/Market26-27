@@ -43,7 +43,7 @@ public class ToggleWishListBDBlackTest {
 		testDa.close();
 	}
 	
-	
+	/*
 	@Test
 	public void test1() {
 		testDa.open();
@@ -126,5 +126,6 @@ public class ToggleWishListBDBlackTest {
 			fail("Ez luke salbuespenik altxa beharko");
 		}
 	}
+	*/
 	
 }

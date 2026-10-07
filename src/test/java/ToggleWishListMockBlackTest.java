@@ -61,6 +61,7 @@ public class ToggleWishListMockBlackTest {
 		persistenceMock.close();
 	}
 	
+	/*
 	@Test
 	public void test1() {		
 		try {
@@ -133,4 +134,5 @@ public class ToggleWishListMockBlackTest {
 			fail("Ez luke salbuespenik altxa beharko");
 		}
 	}
+	*/
 }

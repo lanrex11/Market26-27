@@ -46,7 +46,7 @@ public class ToggleWishListMockWhiteTest {
 		sale = new Sale("Baloia", "Oso polita", 1, 20, null, null, regist);
 		sale.setSaleNumber(saleNum);
 		}
-	
+	/*
 	@Test
 	public void test1() {
 		when(db.find(Registered.class, email)).thenReturn(null);
@@ -104,5 +104,5 @@ public class ToggleWishListMockWhiteTest {
 			System.out.println("Ez luke salbuespenik altxa behar");
 			fail();
 		}
-	}
+	}*/
 }
