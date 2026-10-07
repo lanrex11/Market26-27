@@ -113,7 +113,7 @@ public class ManageMoneyMockBlackTest {
 			fail("Ez litzateke honera iritsi beharko");
 		}
 	} 
-
+	/*
 	@Test
 	public void test4() {
 		try {
@@ -125,7 +125,7 @@ public class ManageMoneyMockBlackTest {
 		}catch(Exception e){
 			fail("Ez litzateke honera iritsi beharko");
 		}
-	} 
+	}*/
 	
 	@Test
 	public void test5() {

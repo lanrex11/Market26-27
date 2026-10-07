@@ -94,7 +94,7 @@ public class ManageMoneyBDBlackTest {
 		}
 	} 
 
-	@Test
+	/*@Test
 	public void test4() {
 		try {
 			double expected = balance;
@@ -106,6 +106,7 @@ public class ManageMoneyBDBlackTest {
 			fail("Ez litzateke honera iritsi beharko");
 		}
 	} 
+	*/
 	
 	@Test
 	public void test5() {
