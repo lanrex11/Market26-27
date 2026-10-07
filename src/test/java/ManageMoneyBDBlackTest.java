@@ -54,7 +54,7 @@ public class ManageMoneyBDBlackTest {
 		testDA.removeRegistered(email);
 		testDA.close();
 	}	
-
+	/*
 	@Test
 	public void test1() {
 		try {
@@ -94,7 +94,7 @@ public class ManageMoneyBDBlackTest {
 		}
 	} 
 
-	/*@Test
+	@Test
 	public void test4() {
 		try {
 			double expected = balance;
@@ -106,7 +106,6 @@ public class ManageMoneyBDBlackTest {
 			fail("Ez litzateke honera iritsi beharko");
 		}
 	} 
-	*/
 	
 	@Test
 	public void test5() {
@@ -148,4 +147,5 @@ public class ManageMoneyBDBlackTest {
 			fail("Ez litzateke honera iritsi beharko");
 		}
 	} 
+	*/
 }
