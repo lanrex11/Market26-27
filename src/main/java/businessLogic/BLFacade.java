@@ -33,8 +33,6 @@ import java.awt.Image;
  */
 @WebService
 public interface BLFacade  {
-	  
-
 	/**
 	 * This method creates/adds a product to a seller
 	 * 
