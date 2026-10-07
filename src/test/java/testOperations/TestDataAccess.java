@@ -1,5 +1,5 @@
 package testOperations;
-
+//aldaketak ikusteko ea sonar aldatzen den push egitean
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
