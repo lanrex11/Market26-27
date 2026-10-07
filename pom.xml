@@ -72,7 +72,6 @@
 		<sonar.organization>lanrex11</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.projectKey>lanrex11_marktetsi2</sonar.projectKey>
-		<sonar.token>7ba2cf7e69523f5a73533002377e911fe4e0291e</sonar.token>
 	</properties>
 
 	<!-- https://mvnrepository.com/artifact/junit/junit -->
