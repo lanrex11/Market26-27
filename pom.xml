@@ -1,22 +1,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>Market26-27</groupId>
-  <artifactId>Market26-27</artifactId>
+  <groupId>Market26</groupId>
+  <artifactId>lanrex11_marktetsi2</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <build>
 		<plugins>
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.8.1</version> <!-- O una versión reciente -->
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>properties</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
+				<version>3.5.3</version>
 				<configuration>
 					<testFailureIgnore>true</testFailureIgnore>
+					<argLine>-Duser.language=es -Duser.country=ES</argLine>
+					<argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar}</argLine>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.8</version>
+				<version>0.8.11</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -34,6 +48,14 @@
 			</plugin>
 			
 		</plugins>
+		<resources>
+        <resource>
+            <directory>src/main/java</directory>
+            <includes>
+                <include>*.properties</include>
+            </includes>
+        </resource>
+    </resources>
 	</build>
 	<repositories>
 		<repository>
@@ -44,13 +66,13 @@
 	</repositories>
 
 	<properties>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+		<maven.compiler.source>21</maven.compiler.source>
 
 		<sonar.organization>lanrex11</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.projectKey>lanrex11_Market26</sonar.projectKey>
-	
+		<sonar.projectKey>lanrex11_marktetsi2</sonar.projectKey>
+		<sonar.token>7ba2cf7e69523f5a73533002377e911fe4e0291e</sonar.token>
 	</properties>
 
 	<!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -115,32 +137,32 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent -->
-		<dependency>
+	<!--	<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy-agent</artifactId>
 			<version>1.10.10</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency>-->
 
-		<!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
+		<!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
 			<version>1.10.10</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.objenesis/objenesis-tck -->
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.objenesis/objenesis-tck
 		<dependency>
 			<groupId>org.objenesis</groupId>
 			<artifactId>objenesis-tck</artifactId>
 			<version>3.0.1</version>
-		</dependency> 
+		</dependency> -->
 
 
 		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
 		<dependency>
 			<groupId>org.mockito</groupId>
-			<artifactId>mockito-inline</artifactId>
-			<version>3.4.0</version>
+			<artifactId>mockito-core</artifactId>
+			<version>5.14.0</version>
 			<scope>test</scope>
 		</dependency>
 
