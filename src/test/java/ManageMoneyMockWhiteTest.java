@@ -73,7 +73,7 @@ public class ManageMoneyMockWhiteTest {
 		persistenceMock.close();
 	}
 
-	/*
+	
 	@Test
 	public void test1() {
 		try {
@@ -137,5 +137,5 @@ public class ManageMoneyMockWhiteTest {
 			fail("Ez luke salbuespenik altsatu beharko");
 		}
 	}
-	*/
+	
 }

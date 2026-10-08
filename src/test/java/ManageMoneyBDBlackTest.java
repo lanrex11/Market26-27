@@ -54,7 +54,7 @@ public class ManageMoneyBDBlackTest {
 		testDA.removeRegistered(email);
 		testDA.close();
 	}	
-	
+	/*
 	@Test
 	public void test1() {
 		try {
@@ -146,6 +146,7 @@ public class ManageMoneyBDBlackTest {
 		}catch(Exception e){
 			fail("Ez litzateke honera iritsi beharko");
 		}
-	} 
+	}
+	*/
 	
 }

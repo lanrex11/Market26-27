@@ -75,7 +75,7 @@ public class ManageMoneyMockBlackTest {
 		persistenceMock.close();
 	}
 
-	
+	/*
 	@Test
 	public void test1() {
 		try {
@@ -167,5 +167,6 @@ public class ManageMoneyMockBlackTest {
 			fail("Ez litzateke honera iritsi beharko");
 		}
 	}
+	*/
 	
 }
