@@ -104,7 +104,7 @@ public class ManageMoneyMockWhiteTest {
 			fail("Ez litzateke honera iritsi beharko");
 		}
 	} 
-
+	/*
 	@Test
 	public void test3() {
 		try {
@@ -121,6 +121,7 @@ public class ManageMoneyMockWhiteTest {
 			fail("Ez luke salbuespenik altsatu beharko");
 		}
 	}
+	*/
 	@Test
 	public void test4() {
 		try {

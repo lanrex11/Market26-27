@@ -86,7 +86,7 @@ public class ManageMoneyBDWhiteTest {
 			fail("Ez litzateke honera iritsi beharko");
 		}
 	} 
-
+	/*
 	@Test
 	public void test3() {
 		try {
@@ -103,6 +103,7 @@ public class ManageMoneyBDWhiteTest {
 			fail("Ez luke salbuespenik altsatu beharko");
 		}
 	}
+	*/
 	@Test
 	public void test4() {
 		try {

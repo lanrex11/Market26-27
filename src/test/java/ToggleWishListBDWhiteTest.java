@@ -44,7 +44,7 @@ public class ToggleWishListBDWhiteTest {
 		testDA.removeRegistered("salePortaduna");
 		testDA.close();
 	}
-	/*
+	
 	@Test
 	public void test1() {
 		try {
@@ -95,7 +95,7 @@ public class ToggleWishListBDWhiteTest {
 			
 		}
 	}
-	
+	/*
 	@Test
 	public void test4() {
 		testDA.open();
@@ -116,4 +116,5 @@ public class ToggleWishListBDWhiteTest {
 		
 	}
 	*/
+	
 }
