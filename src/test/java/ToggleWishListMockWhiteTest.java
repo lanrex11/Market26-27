@@ -89,7 +89,7 @@ public class ToggleWishListMockWhiteTest {
 			fail();
 		}
 	}
-	/*
+	
 	@Test
 	public void test4() {
 		regist.addToWishList(sale);
@@ -105,5 +105,5 @@ public class ToggleWishListMockWhiteTest {
 			fail();
 		}
 	}
-	*/
+	
 }
