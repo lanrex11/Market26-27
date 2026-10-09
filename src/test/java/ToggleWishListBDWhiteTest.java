@@ -95,7 +95,7 @@ public class ToggleWishListBDWhiteTest {
 			
 		}
 	}
-	/*
+	
 	@Test
 	public void test4() {
 		testDA.open();
@@ -115,7 +115,7 @@ public class ToggleWishListBDWhiteTest {
 		}
 		
 	}
-	*/
+	
 	
 	
 }
