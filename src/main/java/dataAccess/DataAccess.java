@@ -331,9 +331,7 @@ public class DataAccess  {
 		ArrayList<Offer> offers = new ArrayList<Offer>();
 		for(Offer o:query.getResultList()) {
 			Request r = o.getRequest();
-			if(	r.getRequester().getEmail().equals(currentMail) && 
-					r.getRequestStatus().equals(RequestStatusType.AVAILABLE) &&
-					r.getTitle().contains(filter)) {
+			if(	isMatchingRequest(currentMail, filter, r)) {
 				System.out.println("getOffers, currentmail: "+currentMail);
 				offers.add(o);
 			}
@@ -341,6 +339,12 @@ public class DataAccess  {
 
 		return offers;
 
+	}
+
+	private boolean isMatchingRequest(String currentMail, String filter, Request r) {
+		return r.getRequester().getEmail().equals(currentMail) && 
+				r.getRequestStatus().equals(RequestStatusType.AVAILABLE) &&
+				r.getTitle().contains(filter);
 	}
 
 
@@ -768,12 +772,15 @@ public class DataAccess  {
 			throw new NotEnoughMoneyException();
 		}
 
-		Sale s = offerer.addSale(r.getTitle(), r.getDescription(), o.getStatus(), (float) o.getPrice(), UtilDate.trim(new Date()), null);
-		s.setSaleStatus(SaleStatusType.BOUGHT);
+		ArrayList<Sale> saleList = addOffer(o, r, offerer);
 
-		ArrayList<Sale> saleList = new ArrayList<>();
-		saleList.add(s);
+		manageMovements(requester, offerer, price, saleList);
 
+		db.getTransaction().commit();
+
+	}
+
+	private void manageMovements(Registered requester, Registered offerer, Double price, ArrayList<Sale> saleList) {
 		double newBuyerBalance  = requester.getBalance() - price;
 		double newSellerBalance = offerer.getBalance()   + price;
 
@@ -783,9 +790,15 @@ public class DataAccess  {
 
 		offerer.setBalance(newSellerBalance);
 		offerer.addToMovements(MovementType.SELL, price, newSellerBalance, saleList);
+	}
 
-		db.getTransaction().commit();
+	private ArrayList<Sale> addOffer(Offer o, Request r, Registered offerer) {
+		Sale s = offerer.addSale(r.getTitle(), r.getDescription(), o.getStatus(), (float) o.getPrice(), UtilDate.trim(new Date()), null);
+		s.setSaleStatus(SaleStatusType.BOUGHT);
 
+		ArrayList<Sale> saleList = new ArrayList<>();
+		saleList.add(s);
+		return saleList;
 	}
 
 	public void declineOffer(Offer offer) {
