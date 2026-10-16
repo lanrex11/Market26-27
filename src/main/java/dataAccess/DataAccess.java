@@ -171,11 +171,6 @@ public class DataAccess  {
 			db.persist(seller); 
 			db.getTransaction().commit();
 			System.out.println("sale stored "+sale+ " "+seller);
-
-
-
-			System.out.println("hasta aqui");
-
 			return sale;
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -665,28 +660,37 @@ public class DataAccess  {
 			return;
 		}
 
+		Sale sale = removeReportFromUserSalesDatabase(r);
+
+		if (sale != null) {
+			restoreStatusIfNoPending(sale);
+		}
+		db.getTransaction().commit();
+	}
+
+	private Sale removeReportFromUserSalesDatabase(Report r) {
 		Registered reg = r.getUser();
 		Sale sale = r.getSale();
 
 		if (reg != null) reg.getReports().remove(r);
 		if (sale != null) sale.getReports().remove(r);
 		db.remove(r);
+		return sale;
+	}
 
-		if (sale != null) {
-			boolean reportsPending = false;
-			for (Report rep : sale.getReports()) {
-				if (!rep.isTreated()) {
-					reportsPending = true;
-					break;
-				}
-			}
-			if (!reportsPending) {
-				sale.setSaleStatus(SaleStatusType.ON_SALE);
+	private void restoreStatusIfNoPending(Sale sale) {
+		boolean reportsPending = false;
+		for (Report rep : sale.getReports()) {
+			if (!rep.isTreated()) {
+				reportsPending = true;
+				break;
 			}
 		}
-
-		db.getTransaction().commit();
+		if (!reportsPending) {
+			sale.setSaleStatus(SaleStatusType.ON_SALE);
+		}
 	}
+	
 
 	public void adminReport(int reportID) {
 		db.getTransaction().begin();
