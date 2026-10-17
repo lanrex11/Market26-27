@@ -493,24 +493,48 @@ public class DataAccess  {
 		float totalPrize = first.getPrice();
 		Registered seller = first.getSeller();
 
+		totalPrize = proccesSales(saleNumbers, sales, totalPrize, seller);
+
+		if(!verifyTotalPrice(buyer, totalPrize)) return false;
+		
+		createBalances(buyer, sales, totalPrize, seller);
+
+		cleanWishLists(sales);
+
+		db.getTransaction().commit();
+		return true;
+	}
+	
+	private float proccesSales(List<Integer> saleNumbers, ArrayList<Sale> sales, float totalPrize, Registered seller) {
 		int i = 1;
 		while(i < saleNumbers.size()) {
 			Sale s = db.find(Sale.class, saleNumbers.get(i));
 			if(s == null || seller != s.getSeller()) {
 				db.getTransaction().rollback();
-				return false;
+				return -1.0f;
 			}
 			s.setSaleStatus(SaleStatusType.BOUGHT);
 			sales.add(s);
 			totalPrize += s.getPrice();
 			i++;
 		}
+		return totalPrize;
+	}
+
+
+	private boolean verifyTotalPrice(Registered buyer, float totalPrize) throws NotEnoughMoneyException {
+		if(totalPrize == -1.0f) {
+			return false;
+		}
 
 		if (totalPrize > buyer.getBalance()) {
 			db.getTransaction().rollback();
 			throw new NotEnoughMoneyException();
 		}
+		return true;
+	}
 
+	private void createBalances(Registered buyer, ArrayList<Sale> sales, float totalPrize, Registered seller) {
 		double newBuyerBalance = buyer.getBalance()-totalPrize;
 		buyer.addToBought(sales);
 		buyer.setBalance(newBuyerBalance);
@@ -520,13 +544,8 @@ public class DataAccess  {
 		double newSellerBalance = seller.getBalance()+totalPrize;
 		seller.setBalance(newSellerBalance);
 		seller.addToMovements(MovementType.SELL,totalPrize,newSellerBalance,sales);
-
-		cleanWishLists(sales);
-
-		db.getTransaction().commit();
-		return true;
-
 	}
+
 
 
 	public void register(Registered seller) {
