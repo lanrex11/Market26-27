@@ -202,8 +202,8 @@ public class Registered extends User implements Serializable {
 		requests.add(r);
 	}
 
-	public void addOffer(Request request,int status, double price, String description) {
-		Offer o = new Offer(price,description,status,this,request);
+	public void addOffer(Request request,OfferData data) {
+		Offer o = new Offer(data.price,data.description,data.status,this,request);
 		offers.add(o);
 		request.addOffer(o);
 	}
