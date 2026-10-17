@@ -564,10 +564,8 @@ public class DataAccess  {
 	}
 
 	public boolean toggleWishList(String mail, int saleNumber) {
-
-		boolean listanDago = isInWishList(mail, saleNumber);
-
 		db.getTransaction().begin();
+		
 		Registered seller = db.find(Registered.class, mail);
 		Sale sale = db.find(Sale.class, saleNumber);
 
@@ -577,7 +575,7 @@ public class DataAccess  {
 		}
 
 		//Ezin daitezke bi trantsakzio aldi berean hasi, beraz hasieran ikusi dagoen edo ez
-		if(!listanDago) seller.addToWishList(sale);
+		if(!seller.getWishList().contains(sale)) seller.addToWishList(sale);
 		else 			seller.removeFromWishList(sale);
 		db.getTransaction().commit();
 		return true;
@@ -585,18 +583,13 @@ public class DataAccess  {
 	}
 
 	public boolean isInWishList(String mail, int saleNumber) {
-		db.getTransaction().begin();
 		Registered seller = db.find(Registered.class, mail);
 		Sale sale = db.find(Sale.class, saleNumber);
 
 		if (seller == null || sale == null) {
-			db.getTransaction().commit();
 			return false;
 		}
-		db.getTransaction().commit();
 		return seller.getWishList().contains(sale);
-
-
 	}
 
 	public void cleanWishLists(ArrayList<Sale> sales) {
