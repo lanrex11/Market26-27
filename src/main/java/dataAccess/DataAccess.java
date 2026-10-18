@@ -205,17 +205,7 @@ public class DataAccess  {
 	 * @return collection of products that contain desc in a title
 	 */
 	public List<Sale> getPublishedSales(String desc, Date pubDate, String email) {
-		System.out.println(">> DataAccess: getProducts=> from= " + desc);
-
-		TypedQuery<Sale> query = db.createQuery(
-				"SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <= ?2 AND (s.saleStatus = ?3 OR s.saleStatus = ?4)",
-				Sale.class);
-		query.setParameter(1, "%" + desc + "%");
-		query.setParameter(2, pubDate);
-		query.setParameter(3, SaleStatusType.ON_SALE);
-		query.setParameter(4, SaleStatusType.USER_REPORTED);
-
-		List<Sale> sales = query.getResultList();
+		List<Sale> sales = querySales(desc, pubDate);
 		ArrayList<Sale> ema = new ArrayList<Sale>();
 		for (Sale s : sales) {
 			if (!s.getSeller().getEmail().equals(email)) {
@@ -226,7 +216,7 @@ public class DataAccess  {
 		return ema;
 	}
 
-	public List<Sale> getPublishedSales(String desc, Date pubDate, String buyerEmail, String sellerMail, ArrayList<Sale> basket) {
+	private List<Sale> querySales(String desc, Date pubDate) {
 		System.out.println(">> DataAccess: getProducts=> from= " + desc);
 
 		TypedQuery<Sale> query = db.createQuery(
@@ -237,14 +227,16 @@ public class DataAccess  {
 		query.setParameter(3, SaleStatusType.ON_SALE);
 		query.setParameter(4, SaleStatusType.USER_REPORTED);
 
-
 		List<Sale> sales = query.getResultList();
+		return sales;
+	}
+
+	public List<Sale> getPublishedSales(String desc, Date pubDate, String buyerEmail, String sellerMail, ArrayList<Sale> basket) {
+		List<Sale> sales = querySales(desc, pubDate);
 		ArrayList<Sale> ema = new ArrayList<Sale>();
-		System.out.println("Data acces basket: " + basket);
 		for (Sale s : sales) {
 
 			if (!s.getSeller().getEmail().equals(buyerEmail) && s.getSeller().getEmail().equals(sellerMail)) {
-				System.out.println("s: " + s);
 				if(!basket.contains(s))
 					ema.add(s);
 			}
