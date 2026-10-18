@@ -1,6 +1,5 @@
 package businessLogic;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +10,7 @@ import enums.MovementType;
 import enums.ReportReason;
 import enums.SaleType;
 import domain.ComplaintContainer;
+import domain.CreateSaleParameter;
 import domain.MovementContainer;
 import domain.Offer;
 import domain.OfferContainer;
@@ -25,6 +25,7 @@ import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+
 import java.awt.Image;
 
 
@@ -35,17 +36,15 @@ import java.awt.Image;
 public interface BLFacade  {
 	/**
 	 * This method creates/adds a product to a seller
-	 * 
-	 * @param title of the product
-	 * @param description of the product
-	 * @param status 
+	 * @param data TODO
 	 * @param selling price
 	 * @param category of a product
 	 * @param publicationDate
+	 * 
 	 * @return Sale
 	 */
    @WebMethod
-	public void createSale(String title, String description, int status, float price, Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException;
+	public void createSale(String sellerEmail, CreateSaleParameter data) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException;
 	
 	
 	/**

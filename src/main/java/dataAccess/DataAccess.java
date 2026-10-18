@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
-import javax.jws.WebMethod;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -134,38 +133,36 @@ public class DataAccess  {
 
 	/** 
 	 * This method creates/adds a product to a seller
-	 * 
-	 * @param title of the product
-	 * @param description of the product
-	 * @param status 
+	 * @param parameterObject TODO
 	 * @param selling price
 	 * @param category of a product
 	 * @param publicationDate
+	 * 
 	 * @return Product
 	 * @throws SaleAlreadyExistException if the same product already exists for the seller
 	 */
-	public Sale createSale(String title, String description, int status, float price,  Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
+	public Sale createSale(String sellerEmail, CreateSaleParameter parameterObject) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
 
 
-		System.out.println(">> DataAccess: createProduct=> title= "+title+" seller="+sellerEmail);
+		System.out.println(">> DataAccess: createProduct=> title= "+parameterObject.title+" seller="+sellerEmail);
 		try {
 
 
-			if(pubDate.before(UtilDate.trim(new Date()))) {
+			if(parameterObject.pubDate.before(UtilDate.trim(new Date()))) {
 				throw new MustBeLaterThanTodayException(ResourceBundle.getBundle(ETIKETAK).getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
 			}
-			if (file==null)
+			if (parameterObject.file==null)
 				throw new FileNotUploadedException(ResourceBundle.getBundle(ETIKETAK).getString("DataAccess.ErrorFileNotUploadedException"));
 
 			db.getTransaction().begin();
 
 			Registered seller = db.find(Registered.class, sellerEmail);
-			if (seller.doesSaleExist(title)) {
+			if (seller.doesSaleExist(parameterObject.title)) {
 				db.getTransaction().commit();
 				throw new SaleAlreadyExistException(ResourceBundle.getBundle(ETIKETAK).getString("DataAccess.SaleAlreadyExist"));
 			}
 
-			Sale sale = seller.addSale(title, description, status, price, pubDate, file);
+			Sale sale = seller.addSale(parameterObject.title, parameterObject.description, parameterObject.status, parameterObject.price, parameterObject.pubDate, parameterObject.file);
 			//next instruction can be obviated
 
 			db.persist(seller); 

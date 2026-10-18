@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+
 import dataAccess.DataAccess;
 import domain.Sale;
 import domain.User;
@@ -15,6 +16,7 @@ import enums.ReportReason;
 import enums.SaleType;
 import domain.Complaint;
 import domain.ComplaintContainer;
+import domain.CreateSaleParameter;
 import domain.Movement;
 import domain.MovementContainer;
 import domain.Offer;
@@ -64,9 +66,9 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * {@inheritDoc}
 	 */
 	@WebMethod
-	public void createSale(String title, String description,int status, float price, Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
+	public void createSale(String sellerEmail, CreateSaleParameter data) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
 		dbManager.open();
-		Sale product=dbManager.createSale(title, description, status, price, pubDate, sellerEmail, file);		
+		Sale product=dbManager.createSale(sellerEmail, data);		
 		dbManager.close();
 		//return product;
 	};
