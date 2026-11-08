@@ -33,6 +33,9 @@ import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.NotEnoughMoneyException;
 import exceptions.SaleAlreadyExistException;
+import iterator.ExtendedIterator;
+import iterator.ExtendedIteratorImplementation;
+
 import java.awt.image.BufferedImage;
 import java.awt.Image;
 import javax.imageio.ImageIO;
@@ -90,9 +93,14 @@ public class BLFacadeImplementation  implements BLFacade {
 	 */
 	@WebMethod 
 	public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email, String sellerEmail, ArrayList<Sale> basket) {
-		System.out.println(query);
+
 		dbManager.open();
-		System.out.println(query);
+	    System.out.println("desc: " + desc);
+	    System.out.println("pubDate: " + pubDate);
+	    System.out.println("query: " + query);
+	    System.out.println("email: " + email);
+	    System.out.println("sellerEmail: " + sellerEmail);
+	    System.out.println("basket: " + basket);
 
 		List<Sale> rides= new ArrayList<Sale>();
 		switch (query) {
@@ -112,6 +120,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return rides;
 	}
+	
+	public ExtendedIterator<Sale> getQueryIterator(String desc, Date pubDate, SaleType query, String email, String sellerEmail, ArrayList<Sale> basket) {
+		List<Sale> sales = getQuery(desc, pubDate, query, email, sellerEmail, basket);
+		return new ExtendedIteratorImplementation<Sale>(sales);
+	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -128,10 +142,13 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return res;
 	}
+	
+	
+
 
 	public List<ComplaintContainer> getComplaints() {
 		dbManager.open();
-		List<Complaint> rides= dbManager.getComplaints();;
+		List<Complaint> rides= dbManager.getComplaints();
 		List<ComplaintContainer> com = new ArrayList<>();
 
 		for (Complaint c : rides) {
