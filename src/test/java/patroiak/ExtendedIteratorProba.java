@@ -39,7 +39,7 @@ public class ExtendedIteratorProba {
 		while (it.hasPrevious()) {
 			s = it.previous();
 			System.out.println(s);
-			reversed = s.toString() + reversed;
+			reversed = s.toString()+", " + reversed;
 		}
 		
 		String normal = "";
@@ -49,10 +49,14 @@ public class ExtendedIteratorProba {
 		while (it.hasNext()) {
 			s = it.next();
 			System.out.println(s);
-			normal = normal + s.toString();
+			normal = normal + s.toString()+", ";
 		}
 		
-		System.out.println("Berdinak? " + (reversed.equals(normal) && !reversed.equals("")));
+		System.out.println("getQuery: " + ls.toString());
+		System.out.println("Iterator: ["+normal+"]");
+		System.out.println("Berdinak? " + (reversed.equals(normal) 
+				&& !reversed.equals("") 
+				));
 		
 	}
 
