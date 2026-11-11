@@ -68,7 +68,8 @@ public interface BLFacade  {
 	 */
 	@WebMethod public List<Sale> getQuery(String desc, Date pubDate, SaleType query, String email, String sellerEmail, ArrayList<Sale> basket);
 	
-	public ExtendedIterator<Sale> getQueryIterator(String desc, Date pubDate, SaleType query, String email, String sellerEmail, ArrayList<Sale> basket);
+	@WebMethod(exclude = true) 
+	ExtendedIterator<Sale> getQueryIterator(String desc, Date pubDate, SaleType query, String email, String sellerEmail, ArrayList<Sale> basket);
 
 	@WebMethod public List<MovementContainer> getMovements(String email, MovementType type);
 

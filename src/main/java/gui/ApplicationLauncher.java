@@ -10,6 +10,8 @@ import javax.xml.ws.Service;
 
 import configuration.ConfigXML;
 import dataAccess.DataAccess;
+import factory.FacadeFactory;
+import factory.IFacadeFactory;
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
 
@@ -21,35 +23,25 @@ public class ApplicationLauncher {
 
 		ConfigXML c=ConfigXML.getInstance();		
 		Locale.setDefault(new Locale(c.getLocale()));
-		MainGUInonReg a=new MainGUInonReg("seller3@gmail.com");
-		a.setVisible(true);
+		
+
 
 
 		try {
 			
-			BLFacade appFacadeInterface;
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 			
-			if (c.isBusinessLogicLocal()) {
-				DataAccess da= new DataAccess();
-				appFacadeInterface=new BLFacadeImplementation(da);
-			}
-			else { //If remote
-				
-				 String serviceName= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName()+"?wsdl";	 
-				 URL url = new URL(serviceName);
+			// Obtener la fábrica correspondiente
+	        IFacadeFactory factory = FacadeFactory.getFactory(c);
 
-		 
-		        //1st argument refers to wsdl document above
-				//2nd argument is service name, refer to wsdl document above
-		        QName qname = new QName("http://businessLogic/", "BLFacadeImplementationService");
-		 
-		        Service service = Service.create(url, qname);
+	        // Crear la fachada
+	        BLFacade appFacadeInterface = factory.createFacade();
 
-		        appFacadeInterface = service.getPort(BLFacade.class);
-			} 
-			
+
 			MainGUInonReg.setBussinessLogic(appFacadeInterface);
+			
+			MainGUInonReg a=new MainGUInonReg("seller3@gmail.com");
+			a.setVisible(true);
 			//ErreklamatuGUI g=new ErreklamatuGUI();
 			//g.setVisible(true);
 			
